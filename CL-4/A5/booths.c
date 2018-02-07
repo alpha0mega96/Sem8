@@ -3,17 +3,12 @@
 
 int A, S, size_pad;
 int step(int P) {
-	int b = P & 1, l = P & 2;
-	if (l ^ b) {	//01 or 10
-		if (l)	//10
-			P += S;
-		else	//01
-			P += A;
-		P &= size_pad;
-	}
-
-	P >>= 1;
-	printf("%x\n",P);
+	int b = P & 1, l = (P & 2)>>1;
+	if (l ^ b)	//01 or 10
+		P = (P + ((b) ? A : S)) & size_pad;	// Add/Subtract and drop carry (if any)
+	printf("%x, %x %x\n", P, l, b);
+	P = (P & (size_pad+1)>>1) | P >> 1;		// Extract and use MSB (Sign Bit) in right shift.
+	printf("%x\n", P);
 	return P;
 }
 
@@ -26,9 +21,9 @@ int bitsize(int n) {
 	return count;
 }
 int makepad(int bits) {
-	int pad = 0;
-	while (bits-- != 0)
-		pad = pad << 1 + 1;
+	int pad = 1;
+	while (--bits != 0)
+		pad = (pad << 1) + 1;
 	return pad;
 }
 int setup(int m, int r) {
@@ -36,10 +31,11 @@ int setup(int m, int r) {
 	x = (x/4+1)*4;
 	y = (y/4+1)*4;
 	int size_pad = makepad(x + y + 1);
+	printf("%x\n", size_pad);
 	A = m << (y+1);
 	A &= size_pad;
-	printf("%d %x\n", A, A);
 	S = -m << (y+1);
+	printf("%x\n", A);
 	S &= size_pad;
 	printf("%d %x\n", S, S);
 	return y;
@@ -47,7 +43,7 @@ int setup(int m, int r) {
 
 int booths(int m, int r) {
 	int steps = setup (m, r);
-	int P = r<<1 & 0x0F, i = 0;
+	int P = (r & 0x0F) << 1, i = 0;
 	for (; i < steps; i++)
 		P = step(P);
 	return P>>1;
