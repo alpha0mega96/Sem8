@@ -6,10 +6,10 @@
 unsigned int A, S, size_pad;
 int step(int P) {
 	int b = P & 1, l = (P & 2)>>1;			// Extract 0th and 1st bit.
-	if (l ^ b)					// for 01 or 10, we gotta add.
+	if (l ^ b)					//for 01 or 10, we gotta add.
 		P = (P + ((b) ? A : S)) & size_pad;	// Add/Subtract and drop carry (if any)
 	printf("%x, %x %x\n", P, l, b);
-	P = (P & (size_pad+1)>>1) | P >> 1;		// Custom arithmetic shift: Extract and use MSB (Sign Bit) in right shift.
+	P = (P & (size_pad+1)>>1) | P >> 1;		// Extract and use MSB (Sign Bit) in right shift.
 	printf("%x, %u\n", P, P);
 	return P;
 }
