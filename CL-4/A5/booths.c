@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int A, S, size_pad;
+#define ABS(x) ((x < 0)? -x : x)
+
+unsigned int A, S, size_pad;
 int step(int P) {
-	int b = P & 1, l = (P & 2)>>1;
-	if (l ^ b)	//01 or 10
+	int b = P & 1, l = (P & 2)>>1;			// Extract 0th and 1st bit.
+	if (l ^ b)					// for 01 or 10, we gotta add.
 		P = (P + ((b) ? A : S)) & size_pad;	// Add/Subtract and drop carry (if any)
 	printf("%x, %x %x\n", P, l, b);
-	P = (P & (size_pad+1)>>1) | P >> 1;		// Extract and use MSB (Sign Bit) in right shift.
-	printf("%x\n", P);
+	P = (P & (size_pad+1)>>1) | P >> 1;		// Custom arithmetic shift: Extract and use MSB (Sign Bit) in right shift.
+	printf("%x, %u\n", P, P);
 	return P;
 }
 
@@ -42,6 +44,8 @@ int setup(int m, int r) {
 }
 
 int booths(int m, int r) {
+	if (ABS(m) > 16 || ABS(r) > 16)
+		return 0;
 	int steps = setup (m, r);
 	int P = (r & 0x0F) << 1, i = 0;
 	for (; i < steps; i++)
