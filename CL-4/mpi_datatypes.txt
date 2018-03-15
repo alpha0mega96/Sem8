@@ -1,0 +1,25 @@
+MPI datatype	C datatype	C++ datatype
+MPI::CHAR	char	char
+MPI::SHORT	signed short	signed short
+MPI::INT	signed int	signed int
+MPI::LONG	signed long	signed long
+MPI::LONG_LONG	signed long long	signed long long
+MPI::SIGNED_CHAR	signed char	signed char
+MPI::UNSIGNED_CHAR	unsigned char	unsigned char
+MPI::UNSIGNED_SHORT	unsigned short	unsigned short
+MPI::UNSIGNED	unsigned int	unsigned int
+MPI::UNSIGNED_LONG	unsigned long	unsigned long int
+MPI::UNSIGNED_LONG_LONG	unsigned long long	unsigned long long
+MPI::FLOAT	float	float
+MPI::DOUBLE	double	double
+MPI::LONG_DOUBLE	long double	long double
+MPI::BOOL		bool
+MPI::COMPLEX		Complex<float>
+MPI::DOUBLE_COMPLEX		Complex<double>
+MPI::LONG_DOUBLE_COMPLEX		Complex<long double>
+MPI::WCHAR	wchar_t	wchar_t
+MPI::BYTE		
+MPI::PACKED
+
+source:http://mpi-forum.org/docs/mpi-2.1/mpi21-report-bw/node330.htm
+
