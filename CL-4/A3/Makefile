@@ -7,10 +7,16 @@ build : A3.c
 run : build
 	mpiexec ${OPTS} ./${EXECS}
 
+clean : ${EXECS}
+	-rm ${EXECS}
+
 test : testing_%.c
 	mpicc -o testing_%.bin $<
+
 testrun : testing_%.bin
 	mpiexec ${OPTS} $<
 
-clean : ${EXECS} testing_%.bin
-	-rm ${EXECS} out.txt testing_%.bin
+testclean : testing_%.bin
+	-rm out.txt testing_%.bin
+
+
